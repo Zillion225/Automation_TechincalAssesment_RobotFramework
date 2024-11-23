@@ -1,0 +1,8 @@
+{
+    "id": 3,
+    "title": "Test Put Title",
+    "price": 111,
+    "description": "This is test PUT API",
+    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    "category": "Test"
+}
