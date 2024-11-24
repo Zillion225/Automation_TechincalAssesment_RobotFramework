@@ -1,5 +1,20 @@
 {
     "sub_total_price": 39.97,
     "tax_price": 3.20,
-    "total_price": 43.17
+    "total_price": 43.17,
+    "expect_products": [
+        "Sauce Labs Bolt T-Shirt",
+        "Sauce Labs Onesie",
+        "Test.allTheThings() T-Shirt (Red)"
+    ],
+    "expect_descriptions": [
+        "Get your testing superhero on with the Sauce Labs bolt T-shirt. From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.",
+        "Rib snap infant onesie for the junior automation engineer in development. Reinforced 3-snap bottom closure, two-needle hemmed sleeved and bottom won't unravel.",
+        "This classic Sauce Labs t-shirt is perfect to wear when cozying up to your keyboard to automate a few tests. Super-soft and comfy ringspun combed cotton."
+    ],
+    "expect_price_in_cart": [
+        "$15.99",
+        "$7.99",
+        "$15.99"
+    ]
 }

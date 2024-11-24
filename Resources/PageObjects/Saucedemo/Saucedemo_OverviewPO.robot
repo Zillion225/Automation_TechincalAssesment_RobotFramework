@@ -13,6 +13,14 @@ Get all product name in page
     @{product_list}=    CommonPO.Get list of text from locator    locator=css:.cart_list .cart_item .inventory_item_name
     RETURN    ${product_list}
 
+Get all product description in page
+    @{product_list}=    CommonPO.Get list of text from locator    locator=css:.cart_list .cart_item .inventory_item_desc
+    RETURN    ${product_list}
+
+Get all product price text in page
+    @{product_list}=    CommonPO.Get list of text from locator    locator=css:.cart_list .cart_item .inventory_item_price
+    RETURN    ${product_list}
+
 Get subtotal price in cart
     ${text}=    Get Text    locator=css:.summary_info .summary_subtotal_label
     ${numeric}=    CommonPO.Convert text to numeric    text=${text}

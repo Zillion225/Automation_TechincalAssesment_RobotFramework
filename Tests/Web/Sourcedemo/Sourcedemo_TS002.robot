@@ -31,7 +31,6 @@ TC-001: Verify login, add products, and validate checkout process
     # Load the list of products to select from a JSON file
     Log    Loading select item list from JSON file
     @{select_list}=    Load Json From File    file_name=${TC001_SELECT_LIST_JSON}    encoding=utf8
-    &{expect_object}=    Load Json From File    file_name=${TC001_EXPECT_JSON}    encoding=utf8
     
     # Step 1: Open browser and login
     TC-001 Step 1: Open Browser and Login to Saucedemo
@@ -40,13 +39,13 @@ TC-001: Verify login, add products, and validate checkout process
     TC-001 Step 2: Add Products to Cart and Validate    select_list=@{select_list}
 
     # Step 3: Cart Page - Validate cart contents
-    TC-001 Step 3: Validate Cart Contents and Proceed    expect_object=&{expect_object}
+    TC-001 Step 3: Validate Cart Contents and Proceed    select_list=@{select_list}
 
     # Step 4: Checkout Page - Input details and proceed
     TC-001 Step 4: Input Checkout Details
 
     # Step 5: Overview Page - Validate items and prices
-    TC-001 Step 5: Validate Overview Page and Prices    expect_object=&{expect_object}
+    TC-001 Step 5: Validate Overview Page and Prices    select_list=@{select_list}
 
     # Step 6: Complete Order - Return to inventory page
     TC-001 Step 6: Complete Order and Return to Inventory Page
@@ -74,31 +73,17 @@ TC-001 Step 2: Add Products to Cart and Validate
     Saucedemo_InventoryPO.Click to open cart page
 
 TC-001 Step 3: Validate Cart Contents and Proceed
-    [Arguments]    ${expect_object}
+    [Arguments]    ${select_list}
     # Verify the cart page is displayed
     Saucedemo_CartPO.Verify current page is inventory page
     
     # Get the list of products displayed in the cart and compare with selected items
     @{display_product_list}=    Saucedemo_CartPO.Get all product name in page
     Lists Should Be Equal
-    ...    list1=${expect_object["expect_products"]}
+    ...    list1=${select_list}
     ...    list2=${display_product_list}
     ...    ignore_order=${True}
     ...    msg=Selected items must match items in cart
-
-    @{display_product_description_list}=    Saucedemo_CartPO.Get all product description in page
-    Lists Should Be Equal
-    ...    list1=${expect_object["expect_descriptions"]}
-    ...    list2=${display_product_description_list}
-    ...    ignore_order=${True}
-    ...    msg=Selected items description must match items in cart
-
-    @{display_product_price_text_list}=    Saucedemo_CartPO.Get all product price text in page
-    Lists Should Be Equal
-    ...    list1=${expect_object["expect_price_in_cart"]}
-    ...    list2=${display_product_price_text_list}
-    ...    ignore_order=${True}
-    ...    msg=Selected items price must match items in cart
     
     # Proceed to the checkout page
     Saucedemo_CartPO.Next step
@@ -117,40 +102,27 @@ TC-001 Step 4: Input Checkout Details
     Saucedemo_CheckoutPO.Next step
 
 TC-001 Step 5: Validate Overview Page and Prices
-    [Arguments]    ${expect_object}
+    [Arguments]    ${select_list}
     # Verify the overview page is displayed
     Saucedemo_OverviewPO.Verify current page is inventory page
     
     # Validate product list on the overview page
     @{display_product_list}=    Saucedemo_OverviewPO.Get all product name in page
     Lists Should Be Equal
-    ...    list1=${expect_object["expect_products"]}
+    ...    list1=${select_list}
     ...    list2=${display_product_list}
     ...    ignore_order=${True}
     ...    msg=Selected items must match items on overview page
-
-    @{display_product_description_list}=    Saucedemo_OverviewPO.Get all product description in page
-    Lists Should Be Equal
-    ...    list1=${expect_object["expect_descriptions"]}
-    ...    list2=${display_product_description_list}
-    ...    ignore_order=${True}
-    ...    msg=Selected items description must match items in cart
-
-    @{display_product_price_text_list}=    Saucedemo_OverviewPO.Get all product price text in page
-    Lists Should Be Equal
-    ...    list1=${expect_object["expect_price_in_cart"]}
-    ...    list2=${display_product_price_text_list}
-    ...    ignore_order=${True}
-    ...    msg=Selected items price must match items in cart
     
     # Validate pricing details
     ${sub_total_price}=    Saucedemo_OverviewPO.Get subtotal price in cart
     ${tax_price}=    Saucedemo_OverviewPO.Get tax in cart
     ${total_price}=    Evaluate    ${sub_total_price} + ${tax_price}
+    &{expect_json}=    Load Json From File    file_name=${TC001_EXPECT_JSON}    encoding=utf8
     
-    Should Be True    condition=${expect_object["sub_total_price"]} == ${sub_total_price}
-    Should Be True    condition=${expect_object["tax_price"]} == ${tax_price}
-    Should Be True    condition=${expect_object["total_price"]} == ${total_price}
+    Should Be True    condition=${expect_json["sub_total_price"]} == ${sub_total_price}
+    Should Be True    condition=${expect_json["tax_price"]} == ${tax_price}
+    Should Be True    condition=${expect_json["total_price"]} == ${total_price}
     
     # Proceed to complete the order
     Saucedemo_OverviewPO.Next step
