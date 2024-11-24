@@ -1,11 +1,11 @@
 *** Settings ***
 # Importing necessary libraries for file operations and JSON handling
-Library             OperatingSystem        # Handles file-related operations
-Library             JSONLibrary            # Enables JSON data manipulation
+Library     SeleniumLibrary
+Library     Collections
+Library     OperatingSystem    # Handles file-related operations
+Library     JSONLibrary    # Enables JSON data manipulation
+Library     String    # For string manipulation
 
-*** Variables ***
-${BASE_URL}         https://www.saucedemo.com    # Base URL for the main application
-${API_TEST_URL}     https://fakestoreapi.com     # Base URL for testing API endpoints
 
 *** Keywords ***
 Verify Response Status is Success
@@ -22,3 +22,25 @@ Validate Response Against Expected JSON File
     Log    Response JSON: ${response_json}
     # Compare the actual response JSON with the expected JSON
     Should Be Equal    ${response_json}    ${expected_json}    msg=API response does not match the expected result.
+
+Get list of text from locator
+    [Arguments]    ${locator}
+    ${elements}=    Get WebElements    locator=${locator}
+    @{item_list}=    Create List
+    FOR  ${item}  IN  @{elements}
+        ${text}=    Get Text    locator=${item}
+        Append To List    ${item_list}    ${text}
+    END
+    RETURN    ${item_list}
+
+Convert text to numeric
+    [Documentation]
+    ...    Removes all non-numeric characters from a text string and converts the result into a number.
+    ...    Useful for extracting numeric values from strings containing text and numbers.
+    [Arguments]
+    ...    ${text}    # Input text string containing numbers
+    # Remove all non-digit characters (except '.') using regex
+    ${cleaned_number_text}=    Replace String Using Regexp    string=${text}    pattern=[^0-9.]    replace_with=
+    # Convert the cleaned text to a numeric value with two decimal precision
+    ${result}=    Convert To Number    item=${cleaned_number_text}    precision=2
+    RETURN    ${result} 

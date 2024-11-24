@@ -6,6 +6,8 @@ Library     JSONLibrary    # Keywords for JSON manipulation and parsing
 # Loading reusable resources and common keywords for the project
 Resource    ./CommonPO.robot    # Contains shared keywords and utility functions
 
+*** Variables ***
+${API_TEST_URL}     https://fakestoreapi.com     # Base URL for testing API endpoints
 
 *** Keywords ***
 API GET products

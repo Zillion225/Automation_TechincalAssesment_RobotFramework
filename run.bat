@@ -1,2 +1,3 @@
-robot -d Results Tests\APIs\Suite_API_004_Delete.robot
+REM robot -d Results Tests\Web
+robot --variable BROWSER:chrome -d Results Tests\Web
 start Results\report.html
