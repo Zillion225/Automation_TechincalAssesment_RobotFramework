@@ -18,7 +18,8 @@ Test Teardown       Close Browser
 ${BROWSER}                      chrome    # Browser to use for testing
 
 *** Test Cases ***
-Login with invalid username: {${username}} and password: {${password}}
+TC-002: Login with invalid username: {${username}} and password: {${password}}
+    [Tags]    Web    NegativeCase
     [Template]    Login error test template
 
 *** Keywords ***

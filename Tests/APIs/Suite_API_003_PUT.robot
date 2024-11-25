@@ -27,28 +27,28 @@ ${TCAPI012_INPUT_JSON_PATH}         Resources/InputExpect/TCAPI_012/Input_001.js
 *** Test Cases ***
 TC-API006 Validate PUT /products API
     [Documentation]    Validate PUT /products endpoint with a JSON payload.
-    [Tags]    api    api_put
+    [Tags]    API    API_PUT
     ${input_json}=    Load Json From File    file_name=${TCAPI006_INPUT_JSON_PATH}    encoding=utf8
     ${response_json}=    FakestorePO.API PUT products    productId=3    jsonContent=${input_json}
     CommonPO.Validate Response Against Expected JSON File    ${response_json}    ${TCAPI006_EXPECTED_JSON_PATH}
 
 TC-API007 Validate PUT /products API with rating data
     [Documentation]    Validate PUT /products endpoint with JSON payload including rating details.
-    [Tags]    api    api_put
+    [Tags]    API    API_PUT
     ${input_json}=    Load Json From File    file_name=${TCAPI007_INPUT_JSON_PATH}    encoding=utf8
     ${response_json}=    FakestorePO.API PUT products    productId=4    jsonContent=${input_json}
     CommonPO.Validate Response Against Expected JSON File    ${response_json}    ${TCAPI007_EXPECTED_JSON_PATH}
 
 TC-API008 Validate PUT /products API, send id in JSON content
     [Documentation]    Test the PUT /products endpoint by sending a JSON payload with an id value that differs from the URL endpoint.
-    [Tags]    api    api_put
+    [Tags]    API    API_PUT
     ${input_json}=    Load Json From File    file_name=${TCAPI008_INPUT_JSON_PATH}    encoding=utf8
     ${response_json}=    FakestorePO.API PUT products    productId=3    jsonContent=${input_json}
     CommonPO.Validate Response Against Expected JSON File    ${response_json}    ${TCAPI008_EXPECTED_JSON_PATH}
 
 TC-API009 Validate PUT /products API with invalid id (id=0, -1)
     [Documentation]    Test the PUT /products endpoint by sending a JSON payload with an invalid id (id = 0, -1).
-    [Tags]    api    api_put
+    [Tags]    API    API_PUT
     # Check product id = 0
     ${input_json}=    Load Json From File    file_name=${TCAPI009_INPUT_JSON_PATH}    encoding=utf8
     ${response_json}=    FakestorePO.API PUT products    productId=0    jsonContent=${input_json}
