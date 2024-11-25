@@ -1,3 +1,4 @@
 REM robot -d Results Tests\Web
-robot --variable BROWSER:chrome -d Results Tests\Web\Sourcedemo\Sourcedemo_TS001.robot
+REM robot --variable BROWSER:chrome -d Results Tests\Web\Sourcedemo\Sourcedemo_TS002.robot
+robot --variable BROWSER:chrome -d Results Tests
 start Results\report.html

@@ -27,6 +27,7 @@ ${TC001_EXPECT_JSON}            Resources/InputExpect/TC_001/Expect_001.json
 
 *** Test Cases ***
 TC-001: Verify login, add products, and validate checkout process
+    [Tags]    Web    E2E    Regression    Smoke
     [Documentation]    Validate the workflow of login, adding items to cart, and verifying checkout.
     # Load the list of products to select from a JSON file
     Log    Loading select item list from JSON file
