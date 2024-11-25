@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation    
-...    This Robot Framework test script is designed to automate the end-to-end workflow of the Saucedemo application. 
-...    It verifies login functionality, adding items to the cart, validating items during the checkout process, 
-...    and checking the final order summary.
+...    This test suite automates the testing of the login functionality for the Saucedemo website using the Robot Framework. 
+...    It validates the behavior of the login page when incorrect credentials are used, 
+...    ensuring error messages appear as expected.
 # Import necessary libraries and resource files
 Library             SeleniumLibrary
 Library             JSONLibrary
