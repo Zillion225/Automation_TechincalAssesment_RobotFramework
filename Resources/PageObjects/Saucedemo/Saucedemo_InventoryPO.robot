@@ -36,3 +36,24 @@ Total item in cart should be
     [Arguments]    ${number}
     Scroll Element Into View    locator=css:#shopping_cart_container
     Element Text Should Be    locator=css:#shopping_cart_container .shopping_cart_badge    expected=${number}
+
+Find min price item index
+        ${list_of_prices}=    CommonPO.Get list of text from locator    locator=css:.inventory_item_price
+    Log    ${list_of_prices}
+
+    # Find Min Price Index
+    ${min_price}=    Set Variable    999999
+    ${min_price_index}    Set Variable    -1
+    ${count}    Set Variable
+    FOR  ${price_text}  IN  @{list_of_prices}
+        Log    ${price_text}
+        ${price}=    CommonPO.Convert text to numeric    text=${price_text}
+        IF  ${price} < ${min_price}
+            ${min_price}    Set Variable    ${price}
+            ${min_price_index}    Set Variable    ${count}
+        END
+        ${count}    Evaluate    ${count} + 1
+    END
+    Log    ${min_price}
+    Log    ${min_price_index}
+    RETURN    ${min_price_index}
